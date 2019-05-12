@@ -22,6 +22,16 @@ class HomeController extends Controller {
     const { ctx } = this;
     ctx.body = 'i.am news';
   }
+
+  async content() {
+    // 获取get传值
+    // koa中如何获取get传值   ctx.query
+
+    // egg中如何获取get传值
+    const query = this.ctx.query;
+    console.log(query);
+    this.ctx.body = 'news information';
+  }
 }
 
 module.exports = HomeController;
