@@ -32,6 +32,17 @@ class HomeController extends Controller {
     console.log(query);
     this.ctx.body = 'news information';
   }
+
+
+  async newsList() {
+    // koa获取动态路由传值    ctx.params
+
+    // egg中获取动态路由传值
+
+    const params = this.ctx.params;
+    console.log(params);
+    this.ctx.body = 'newsLast';
+  }
 }
 
 module.exports = HomeController;
