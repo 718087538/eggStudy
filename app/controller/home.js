@@ -13,9 +13,10 @@ Model 模型 ：和数据库打交道（查询数据库   请求数据）
 */
 class HomeController extends Controller {
   async index() {
-    const { ctx } = this;
-    ctx.body = 'hi, egg,hello World';
+    // this.ctx.body = 'hi, egg,hello World';
     // await this.ctx.render('index')
+    // 注意  ctx是一部方法，要加await
+    await this.ctx.render('index');
   }
 
   async news() {

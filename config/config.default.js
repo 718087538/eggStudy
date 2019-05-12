@@ -22,9 +22,16 @@ module.exports = appInfo => {
   const userConfig = {
     // myAppName: 'egg',
   };
-
+  // 配制模板引擎
+  // {app_root}/config/config.default.js
+  config.view = {
+    mapping: {
+      '.html': 'ejs',
+    },
+  };
   return {
     ...config,
     ...userConfig,
   };
 };
+
