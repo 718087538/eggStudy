@@ -27,8 +27,12 @@ class HomeController extends Controller {
   }
 
   async news() {
-    const { ctx } = this;
-    ctx.body = 'i.am news';
+    this.ctx.body = 'i.am newsssss';
+  }
+  //这是留言页面
+  async write() {
+    this.ctx.body = 'i.am 留言页面';
+    // await this.ctx.render('write')
   }
 
   async content() {
