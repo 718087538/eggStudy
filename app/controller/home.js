@@ -31,8 +31,11 @@ class HomeController extends Controller {
   }
   //这是留言页面
   async write() {
-    this.ctx.body = 'i.am 留言页面';
-    // await this.ctx.render('write')
+    let msgList="我是留言内容";
+    // this.ctx.body = 'i.am 留言页面';
+    await this.ctx.render('write',{
+      msgList,
+    })
   }
 
   async content() {
