@@ -1,6 +1,12 @@
 'use strict';
-
+//这里是渲染页面和校验参数
 const Controller = require('egg').Controller;
+
+const writeRule = {
+  id: 'string',
+  password: 'string'
+}
+
 // egg是一个mvc框架
 /*
 MVC：
@@ -29,13 +35,18 @@ class HomeController extends Controller {
   async news() {
     this.ctx.body = 'i.am newsssss';
   }
-  //这是留言页面
+  //这是登录页面
   async write() {
-    let msgList="我是留言内容";
+    const { ctx, app } = this;
+    ctx.validate(writeRule, ctx.request.body);
+    let { id, password } = ctx.request.body;
+    let result = await ctx.service.home.write(id, password);
+    ctx.body = result;
     // this.ctx.body = 'i.am 留言页面';
-    await this.ctx.render('write',{
-      msgList,
-    })
+    // await this.ctx.render('write',{
+    //   msgList,
+    // })
+    // ctx.set('show-response-time', used.toString());
   }
 
   async content() {

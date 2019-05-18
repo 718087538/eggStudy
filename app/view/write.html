@@ -3,9 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 </head>
 <body>
-<h1>我是留言页面</h1>
-<p><%=msgList%></p>
+<!--<h1>我是留言页面</h1>-->
+<!--<p><%=msgList%></p>-->
+<h1>这里是注册</h1>
+<form action="">
+    注册号码：<input type="text" name="name">
+    登录密码：<input type="password" name="password">
+    <input type="submit" value="注册">
+</form>
+<br>
+<br>
+<br>
+<br>
+<button class="test">测试jQuery</button>
+<br>
+<br>
+<br>
+
+<h1 id="abc">这里是登录</h1>
+<form action="">
+    账号：<input type="text" name="name">
+    密码：<input type="password" name="password">
+    <input type="submit" value="登录">
+</form>
+
+<h3 class="db">请求数据库成功我会改变</h3>
+
+<script>
+$(function(){
+    $(".test").click(function(){
+        alert("jquery正常");
+    });
+
+
+
+    // $("#abc").click(function(){
+    //     $(".db").html("我已改变");
+    // });
+
+
+    $.ajax({url:"localhost:7002/write",success:function(result){
+       $(".db").html("我已改变");
+    }});
+})
+</script>
+
 </body>
 </html>
