@@ -69,6 +69,13 @@ class HomeController extends Controller {
     console.log(params);
     this.ctx.body = 'newsLast';
   }
+
+  async getNews(){
+    const {ctx,app} = this;
+
+    let result = await ctx.service.home.getNews();
+    ctx.body = result;
+  }
 }
 
 module.exports = HomeController;

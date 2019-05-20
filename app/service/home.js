@@ -27,6 +27,23 @@ class HomeService extends Service {
             }
         }
     }
+    async getNews() {
+        let getNewsSql = `SELECT content FROM public."text" WHERE id >0;`;
+        let result = await this.app.pg.query(getNewsSql);
+        if (result !== '') {
+            return {
+                data: { result },
+                code: 200,
+                desc: '查询数据成功'
+            }
+        }else{
+            return {
+                data:null,
+                code:501,
+                desc:"查询失败"
+            }
+        }
+    }
 }
 
 module.exports = HomeService;
