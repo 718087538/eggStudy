@@ -13,5 +13,6 @@ module.exports = app => {
   router.get('/getNews', controller.home.getNews);
 
   router.get('/admin', controller.admin.index);
+  router.post('/insertNews',controller.admin.insertNews);
 
 };
