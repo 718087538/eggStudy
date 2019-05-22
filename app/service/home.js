@@ -62,6 +62,17 @@ class HomeService extends Service {
         //     }  
         // }
     }
+    async account(name,password){
+        let insertNewsSql = `INSERT INTO public.user(name,password) VALUES ($1,$2) RETURNING *;`;
+        let result = await this.app.pg.query(insertNewsSql, [name,password]);
+        this.app.logger.info('result:', result);
+            return {
+                data:null,
+                code:200,
+                desc:'写入成功'
+            }
+       
+    }
 }
 
 module.exports = HomeService;

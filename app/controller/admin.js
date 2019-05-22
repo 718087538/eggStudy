@@ -16,6 +16,15 @@ class AdminController extends Controller {
     let result = await ctx.service.home.insertNews(text);
     ctx.body = result;
   }
+
+  // 注册
+  async account() {
+    const { ctx, app } = this;
+    let { name,password } = ctx.request.body;
+    let result = await ctx.service.home.account(name,password);
+    ctx.logger.info('3333',result);
+    ctx.body = result;
+  }
 }
 
 module.exports = AdminController;
