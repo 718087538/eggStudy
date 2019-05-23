@@ -17,5 +17,6 @@ module.exports = app => {
   router.post('/account',controller.admin.account);//注册
   router.post('/login',controller.admin.login);//登录
 
+  router.post('/add',controller.home.add);//增加题目
 
 };

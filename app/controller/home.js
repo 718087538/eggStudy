@@ -76,6 +76,14 @@ class HomeController extends Controller {
     let result = await ctx.service.home.getNews();
     ctx.body = result;
   }
+
+//增加单选题目
+  async add(){
+    const { ctx, app } = this;
+    let {title,optiona,optionb,optionc,optiond,key} = ctx.request.body;
+    let result = await ctx.service.home.add(title,optiona,optionb,optionc,optiond,key);
+    ctx.body = result;
+  }
 }
 
 module.exports = HomeController;

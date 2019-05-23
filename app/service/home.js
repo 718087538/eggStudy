@@ -73,6 +73,17 @@ class HomeService extends Service {
                 desc:'写入成功'
             }
     }
+    // 插入单选题目
+    async add(title,optiona,optionb,optionc,optiond,key){
+        let insertQueSql = `INSERT INTO public.select(title,optiona,optionb,optionc,optiond,key) VALUES ($1,$2,$3,$4,$5,$6);`;
+        let result = await this.app.pg.query(insertQueSql, [title,optiona,optionb,optionc,optiond,key]);
+        return {
+            data:null,
+            code:200,
+            desc:'写入成功'
+        }
+    }
+
     async login(name,password){
         let selUserSql = `SELECT password FROM public."user" WHERE name = $1;`;
         let result = await this.app.pg.query(selUserSql,[name]);
@@ -93,6 +104,9 @@ class HomeService extends Service {
             }
         }
     }
+
+
+
 }
 
 module.exports = HomeService;
