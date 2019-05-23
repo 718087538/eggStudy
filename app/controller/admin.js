@@ -25,6 +25,14 @@ class AdminController extends Controller {
     ctx.logger.info('3333',result);
     ctx.body = result;
   }
+  // 登录
+  async login() {
+    const { ctx, app } = this;
+    // ctx.validate(writeRule, ctx.request.body);
+    let { name, password } = ctx.request.body;
+    let result = await ctx.service.home.login(name, password);
+    ctx.body = result;
+  }
 }
 
 module.exports = AdminController;

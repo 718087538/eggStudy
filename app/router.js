@@ -14,6 +14,8 @@ module.exports = app => {
 
   router.get('/admin', controller.admin.index);
   router.post('/insertNews',controller.admin.insertNews);
-  router.post('/account',controller.admin.account);
+  router.post('/account',controller.admin.account);//注册
+  router.post('/login',controller.admin.login);//登录
+
 
 };

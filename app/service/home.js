@@ -62,6 +62,7 @@ class HomeService extends Service {
         //     }  
         // }
     }
+    // 注册，插入数据
     async account(name,password){
         let insertNewsSql = `INSERT INTO public.user(name,password) VALUES ($1,$2) RETURNING *;`;
         let result = await this.app.pg.query(insertNewsSql, [name,password]);
@@ -71,7 +72,26 @@ class HomeService extends Service {
                 code:200,
                 desc:'写入成功'
             }
-       
+    }
+    async login(name,password){
+        let selUserSql = `SELECT password FROM public."user" WHERE name = $1;`;
+        let result = await this.app.pg.query(selUserSql,[name]);
+        let pwd = result.rows[0].password;
+        if(password === pwd){
+            return {
+                data:{
+                    password:password
+                },
+                code:200,
+                desc:"成功"
+            }
+        }else{
+            return{
+                data:null,
+                code:500,
+                desc:"failed"
+            }
+        }
     }
 }
 
