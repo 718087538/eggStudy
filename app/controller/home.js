@@ -90,6 +90,14 @@ class HomeController extends Controller {
     let result = await ctx.service.home.findList();
     ctx.body = result;
   }
+
+  //查找单选
+  async getRadio(){
+    const { ctx, app } = this;
+    let result = await ctx.service.home.getRadio();
+    ctx.body = result;
+  }
+
 }
 
 

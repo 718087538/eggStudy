@@ -115,6 +115,16 @@ class HomeService extends Service {
             desc:"查询成功"
         }
     }
+    //查找单选
+    async getRadio(){
+        let findTitleSql = `SELECT * FROM public."select" WHERE id >=0`;
+        let result = await this.app.pg.query(findTitleSql)
+        return{
+            data:result,
+            code:200,
+            desc:"查询成功"
+        }
+    }
 
 
 }
