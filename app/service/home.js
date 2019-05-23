@@ -36,24 +36,24 @@ class HomeService extends Service {
                 code: 200,
                 desc: '查询数据成功'
             }
-        }else{
+        } else {
             return {
-                data:null,
-                code:501,
-                desc:"查询失败"
+                data: null,
+                code: 501,
+                desc: "查询失败"
             }
         }
     }
-    async insertNews(text){
+    async insertNews(text) {
         let insertNewsSql = `INSERT INTO public.text(content) VALUES ($1) RETURNING *;`;
         let result = await this.app.pg.query(insertNewsSql, [text]);
         this.app.logger.info('result:', result);
         // if(result){
-            return {
-                data:null,
-                code:200,
-                desc:'写入成功'
-            }
+        return {
+            data: null,
+            code: 200,
+            desc: '写入成功'
+        }
         // }else{
         //     return {
         //         data:null,
@@ -63,44 +63,44 @@ class HomeService extends Service {
         // }
     }
     // 注册，插入数据
-    async account(name,password){
+    async account(name, password) {
         let insertNewsSql = `INSERT INTO public.user(name,password) VALUES ($1,$2) RETURNING *;`;
-        let result = await this.app.pg.query(insertNewsSql, [name,password]);
+        let result = await this.app.pg.query(insertNewsSql, [name, password]);
         this.app.logger.info('result:', result);
-            return {
-                data:null,
-                code:200,
-                desc:'写入成功'
-            }
+        return {
+            data: null,
+            code: 200,
+            desc: '写入成功'
+        }
     }
     // 插入单选题目
-    async add(title,optiona,optionb,optionc,optiond,key){
+    async add(title, optiona, optionb, optionc, optiond, key) {
         let insertQueSql = `INSERT INTO public.select(title,optiona,optionb,optionc,optiond,key) VALUES ($1,$2,$3,$4,$5,$6);`;
-        let result = await this.app.pg.query(insertQueSql, [title,optiona,optionb,optionc,optiond,key]);
+        let result = await this.app.pg.query(insertQueSql, [title, optiona, optionb, optionc, optiond, key]);
         return {
-            data:null,
-            code:200,
-            desc:'写入成功'
+            data: null,
+            code: 200,
+            desc: '写入成功'
         }
     }
 
-    async login(name,password){
+    async login(name, password) {
         let selUserSql = `SELECT password FROM public."user" WHERE name = $1;`;
-        let result = await this.app.pg.query(selUserSql,[name]);
+        let result = await this.app.pg.query(selUserSql, [name]);
         let pwd = result.rows[0].password;
-        if(password === pwd){
+        if (password === pwd) {
             return {
-                data:{
-                    password:password
+                data: {
+                    password: password
                 },
-                code:200,
-                desc:"成功"
+                code: 200,
+                desc: "成功"
             }
-        }else{
-            return{
-                data:null,
-                code:500,
-                desc:"failed"
+        } else {
+            return {
+                data: null,
+                code: 500,
+                desc: "failed"
             }
         }
     }
