@@ -117,7 +117,7 @@ class HomeService extends Service {
     }
     //查找单选
     async getRadio(rows,pageIndex){
-        pageIndex = pageIndex * (pageIndex-1);
+        pageIndex = rows * (pageIndex-1);//可能是这里的问题~！！！！！！！！！！！！！！！！！！！！！！！！！！！！
         console.log('=========='+rows+'======'+pageIndex);
         let findTitleSql = `SELECT * FROM public."select" LIMIT $1 OFFSET $2;`;
         let totalSql = `SELECT COUNT(id) FROM public."select";`;
