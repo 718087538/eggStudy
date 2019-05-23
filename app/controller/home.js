@@ -94,7 +94,8 @@ class HomeController extends Controller {
   //查找单选
   async getRadio(){
     const { ctx, app } = this;
-    let result = await ctx.service.home.getRadio();
+    let {rows,pageIndex} = ctx.request.body;
+    let result = await ctx.service.home.getRadio(rows,pageIndex);
     ctx.body = result;
   }
 
