@@ -116,11 +116,18 @@ class HomeService extends Service {
         }
     }
     //查找单选
-    async getRadio(){
-        let findTitleSql = `SELECT * FROM public."select"`;
-        let result = await this.app.pg.query(findTitleSql)
+    async getRadio(rows,pageIndex){
+        pageIndex = pageIndex * (pageIndex-1);
+        console.log('=========='+rows+'======'+pageIndex);
+        let findTitleSql = `SELECT * FROM public."select" LIMIT $1 OFFSET $2;`;
+        let totalSql = `SELECT COUNT(id) FROM public."select";`;
+        let total = await this.app.pg.query(totalSql);
+        let result = await this.app.pg.query(findTitleSql,[rows,pageIndex]);
         return{
-            data:result,
+            data:{
+                result: result.rows,
+                total: total.rows[0].count
+            },
             code:200,
             desc:"查询成功"
         }

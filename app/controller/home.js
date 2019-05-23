@@ -93,9 +93,12 @@ class HomeController extends Controller {
 
   //查找单选
   async getRadio(){
-    const { ctx, app } = this;
-    let {rows,pageIndex} = ctx.request.body;
-    let result = await ctx.service.home.getRadio(rows,pageIndex);
+    const { ctx } = this;
+    let serach = ctx.request.body;//其实也可以用一个变量接收，然后在取出来
+    // let serach = ctx.query;也可以直接拼接在url后面进行查询
+    // http://127.0.0.1:7001/getRadio?pageIndex=1&rows=2
+    ctx.logger.info('serach',serach);
+    let result = await ctx.service.home.getRadio(serach.rows,serach.pageIndex);
     ctx.body = result;
   }
 
