@@ -84,6 +84,7 @@ class HomeService extends Service {
         }
     }
 
+    // 登录
     async login(name, password) {
         let selUserSql = `SELECT password FROM public."user" WHERE name = $1;`;
         let result = await this.app.pg.query(selUserSql, [name]);
@@ -104,7 +105,16 @@ class HomeService extends Service {
             }
         }
     }
-
+    // 查找列表
+    async findList(){
+        let findTitleSql = `SELECT title FROM public."h5" WHERE id >=0`;
+        let result = await this.app.pg.query(findTitleSql)
+        return{
+            data:result,
+            code:200,
+            desc:"查询成功"
+        }
+    }
 
 
 }

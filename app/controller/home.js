@@ -84,6 +84,13 @@ class HomeController extends Controller {
     let result = await ctx.service.home.add(title,optiona,optionb,optionc,optiond,key);
     ctx.body = result;
   }
+  //查询请求的列表
+  async findList(){
+    const { ctx, app } = this;
+    let result = await ctx.service.home.findList();
+    ctx.body = result;
+  }
 }
+
 
 module.exports = HomeController;

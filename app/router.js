@@ -18,5 +18,6 @@ module.exports = app => {
   router.post('/login',controller.admin.login);//登录
 
   router.post('/add',controller.home.add);//增加题目
-
+  router.post('/findList',controller.home.findList);//增加题目
+  
 };
