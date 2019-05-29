@@ -106,9 +106,9 @@ class HomeService extends Service {
         }
     }
     // 查找列表
-    async findList(){
-        let findTitleSql = `SELECT title FROM public."h5" WHERE id >=0`;
-        let result = await this.app.pg.query(findTitleSql)
+    async findList(lei){
+        let findTitleSql = `SELECT title,number FROM public."block" WHERE lei = $1`;
+        let result = await this.app.pg.query(findTitleSql,[lei])
         return{
             data:result,
             code:200,
@@ -116,13 +116,14 @@ class HomeService extends Service {
         }
     }
     //查找单选
-    async getRadio(rows,pageIndex){
+    async getRadio(rows,pageIndex,number){
         pageIndex = rows * (pageIndex-1);
-        console.log('=========='+rows+'======'+pageIndex);
-        let findTitleSql = `SELECT * FROM public."select" LIMIT $1 OFFSET $2;`;
-        let totalSql = `SELECT COUNT(id) FROM public."select";`;
-        let total = await this.app.pg.query(totalSql);
-        let result = await this.app.pg.query(findTitleSql,[rows,pageIndex]);
+        console.log('=========='+rows+'======'+pageIndex +'======'+number);
+        let findTitleSql = `SELECT * FROM public."select" WHERE h5_id = $3 LIMIT $1 OFFSET $2;`;
+        // let totalSql = `SELECT COUNT(id) FROM public."select";`;//总共有多少页（个）
+        let totalSql = `SELECT COUNT(id) FROM public."select" WHERE h5_id = $1;`;//总共有多少页（个）
+        let total = await this.app.pg.query(totalSql,[number]);
+        let result = await this.app.pg.query(findTitleSql,[rows,pageIndex,number]);
         return{
             data:{
                 result: result.rows,

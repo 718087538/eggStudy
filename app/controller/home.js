@@ -87,7 +87,8 @@ class HomeController extends Controller {
   //查询请求的列表
   async findList(){
     const { ctx, app } = this;
-    let result = await ctx.service.home.findList();
+    let req = ctx.request.body;
+    let result = await ctx.service.home.findList(req.lei);
     ctx.body = result;
   }
 
@@ -98,11 +99,11 @@ class HomeController extends Controller {
     // let serach = ctx.query;也可以直接拼接在url后面进行查询
     // http://127.0.0.1:7001/getRadio?pageIndex=1&rows=2
     ctx.logger.info('serach',serach);
-    let result = await ctx.service.home.getRadio(serach.rows,serach.pageIndex);
+    let result = await ctx.service.home.getRadio(serach.rows,serach.pageIndex,serach.number);
     ctx.body = result;
   }
 
 }
-
+// 011318200946
 
 module.exports = HomeController;
