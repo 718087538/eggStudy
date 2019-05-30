@@ -99,7 +99,7 @@ class HomeController extends Controller {
     // let serach = ctx.query;也可以直接拼接在url后面进行查询
     // http://127.0.0.1:7001/getRadio?pageIndex=1&rows=2
     ctx.logger.info('serach',serach);
-    let result = await ctx.service.home.getRadio(serach.rows,serach.pageIndex,serach.number,serach.table);
+    let result = await ctx.service.home.getRadio(serach.rows,serach.pageIndex,serach.category_id,serach.sub_id);
     ctx.body = result;
   }
 

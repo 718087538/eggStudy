@@ -107,7 +107,7 @@ class HomeService extends Service {
     }
     // 查找列表
     async findList(lei) {
-        let findTitleSql = `SELECT * FROM public."block" WHERE lei = $1`;
+        let findTitleSql = `SELECT * FROM public."block" WHERE category_id = $1`;
         let result = await this.app.pg.query(findTitleSql, [lei])
         return {
             data: result,
@@ -116,50 +116,17 @@ class HomeService extends Service {
         }
     }
     //查找单选
-    async getRadio(rows, pageIndex, number, table) {
+    async getRadio(rows, pageIndex, category_id,sub_id) {
         pageIndex = rows * (pageIndex - 1);
-        console.log('==========' + rows + '======' + pageIndex + '======table' + table);
-        console.log(table == 'select', "999");
+        console.log('==========' + rows + '======' + pageIndex + '======table'+category_id,sub_id);
+        // console.log(table == 'select', "999");
 
         //不能把表名设为变量？？这样真的很low啊，代码多，估计也影响性能，以后类别多了可咋搞啊    ！警告   ！警告
 
-
-
-        if (table == 'select') {
-            let findTitleSql = `SELECT * FROM public."select" WHERE h5_id = $3 LIMIT $1 OFFSET $2;`;
-            let totalSql = `SELECT COUNT(id) FROM public."select" WHERE h5_id = $1;`;//总共有多少页（个）
-            let total = await this.app.pg.query(totalSql, [number]);
-            let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, number]);
-            return {
-                data: {
-                    result: result.rows,
-                    total: total.rows[0].count
-                },
-                code: 200,
-                desc: "查询成功"
-            }
-
-        } else if (table = 'css_page') {
-            let findTitleSql = `SELECT * FROM public."css_page" WHERE css_id = $3 LIMIT $1 OFFSET $2;`;
-            let totalSql = `SELECT COUNT(id) FROM public."css_page" WHERE css_id = $1;`;//总共有多少页（个）
-            let total = await this.app.pg.query(totalSql, [number]);
-            let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, number]);
-            return {
-                data: {
-                    result: result.rows,
-                    total: total.rows[0].count
-                },
-                code: 200,
-                desc: "查询成功"
-            }
-
-        }
-
-        // let totalSql = `SELECT COUNT(id) FROM public."select";`;//总共有多少页（个）
-
-
-        // let total = await this.app.pg.query(totalSql, [number]);
-        // let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, number]);
+        let findTitleSql = `SELECT * FROM public."select" WHERE category_id = $3 and sub_id = $4 LIMIT $1 OFFSET $2;`;
+        let totalSql = `SELECT COUNT(id) FROM public."select" WHERE category_id = $1 and sub_id = $2;`;//总共有多少页（个）
+        let total = await this.app.pg.query(totalSql, [category_id, sub_id]);
+        let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, category_id, sub_id]);
         return {
             data: {
                 result: result.rows,
@@ -168,6 +135,43 @@ class HomeService extends Service {
             code: 200,
             desc: "查询成功"
         }
+
+        // if (table == 'select') {
+        //     let findTitleSql = `SELECT * FROM public."select" WHERE h5_id = $3 LIMIT $1 OFFSET $2;`;
+        //     let totalSql = `SELECT COUNT(id) FROM public."select" WHERE h5_id = $1;`;//总共有多少页（个）
+        //     let total = await this.app.pg.query(totalSql, [number]);
+        //     let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, number]);
+        //     return {
+        //         data: {
+        //             result: result.rows,
+        //             total: total.rows[0].count
+        //         },
+        //         code: 200,
+        //         desc: "查询成功"
+        //     }
+
+        // } else if (table = 'css_page') {
+        //     let findTitleSql = `SELECT * FROM public."css_page" WHERE css_id = $3 LIMIT $1 OFFSET $2;`;
+        //     let totalSql = `SELECT COUNT(id) FROM public."css_page" WHERE css_id = $1;`;//总共有多少页（个）
+        //     let total = await this.app.pg.query(totalSql, [number]);
+        //     let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, number]);
+        //     return {
+        //         data: {
+        //             result: result.rows,
+        //             total: total.rows[0].count
+        //         },
+        //         code: 200,
+        //         desc: "查询成功"
+        //     }
+
+        // }
+
+        // let totalSql = `SELECT COUNT(id) FROM public."select";`;//总共有多少页（个）
+
+
+        // let total = await this.app.pg.query(totalSql, [number]);
+        // let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, number]);
+
     }
 
 
