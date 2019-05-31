@@ -20,8 +20,8 @@ class AdminController extends Controller {
   // 注册
   async account() {
     const { ctx, app } = this;
-    let { name,password } = ctx.request.body;
-    let result = await ctx.service.home.account(name,password);
+    let { acount,password } = ctx.request.body;
+    let result = await ctx.service.home.account(acount,password);
     ctx.logger.info('3333',result);
     ctx.body = result;
   }
@@ -29,8 +29,8 @@ class AdminController extends Controller {
   async login() {
     const { ctx, app } = this;
     // ctx.validate(writeRule, ctx.request.body);
-    let { name, password } = ctx.request.body;
-    let result = await ctx.service.home.login(name, password);
+    let { account, password } = ctx.request.body;
+    let result = await ctx.service.home.login(account, password);
     ctx.body = result;
   }
 }

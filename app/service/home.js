@@ -7,14 +7,14 @@ class HomeService extends Service {
         super(ctx);
     }
     async write(id, pwd) {
-        let usersSqlR = `SELECT password FROM public."users" WHERE id = $1;`;
+        let usersSqlR = `SELECT password  FROM public."users" WHERE id = $1;`;
         let users = await this.app.pg.query(usersSqlR, [id]);
         let password = users.rows[0].password;
         this.app.logger.info(users.rows[0].password);
         if (pwd === password) {
             return {
                 data: {
-                    password: password
+                    password: password,
                 },
                 code: 200,
                 desc: '成功'
@@ -63,9 +63,9 @@ class HomeService extends Service {
         // }
     }
     // 注册，插入数据
-    async account(name, password) {
-        let insertNewsSql = `INSERT INTO public.user(name,password) VALUES ($1,$2) RETURNING *;`;
-        let result = await this.app.pg.query(insertNewsSql, [name, password]);
+    async account(acount, password) {
+        let insertNewsSql = `INSERT INTO public.user(acount,password) VALUES ($1,$2) RETURNING *;`;
+        let result = await this.app.pg.query(insertNewsSql, [acount, password]);
         this.app.logger.info('result:', result);
         return {
             data: null,
@@ -85,14 +85,20 @@ class HomeService extends Service {
     }
 
     // 登录
-    async login(name, password) {
-        let selUserSql = `SELECT password FROM public."user" WHERE name = $1;`;
-        let result = await this.app.pg.query(selUserSql, [name]);
+    async login(account, password) {
+        console.log("acount111:",account,"password",password)
+        let selUserSql = `SELECT password,account_id FROM public."user" WHERE account = $1;`;
+        let result = await this.app.pg.query(selUserSql, [account]);
         let pwd = result.rows[0].password;
+        let account_id = result.rows[0].password;
         if (password === pwd) {
+            let token = this.app.jwt.sign({account_id:account_id},this.config.jwt.secret,{expiresIn:'7d'});
+
             return {
                 data: {
-                    password: password
+                    password: password,
+                    token:token
+
                 },
                 code: 200,
                 desc: "成功"
@@ -118,7 +124,7 @@ class HomeService extends Service {
     //查找单选
     async getRadio(rows, pageIndex, category_id,sub_id) {
         pageIndex = rows * (pageIndex - 1);
-        console.log('==========' + rows + '======' + pageIndex + '======table'+category_id,sub_id);
+        console.log('==========' + rows + '======' + pageIndex + '======'+category_id,sub_id);
         // console.log(table == 'select', "999");
 
         //不能把表名设为变量？？这样真的很low啊，代码多，估计也影响性能，以后类别多了可咋搞啊    ！警告   ！警告

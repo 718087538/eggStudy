@@ -24,6 +24,9 @@ module.exports = appInfo => {
     }
   };
 
+  config.jwt = {
+    secret:"123456" //可以自己设置密钥，暂时先不用改
+  }
 
   // add your middleware config here
   config.middleware = [];
