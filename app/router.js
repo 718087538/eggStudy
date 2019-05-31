@@ -20,5 +20,6 @@ module.exports = app => {
   router.post('/add',controller.home.add);//增加题目
   router.post('/findList',controller.home.findList);//查找试卷列表
   router.post('/getRadio',controller.home.getRadio);//查找单选
+  router.post('/addTitle',controller.add.addTitle);//增加试卷题目
   
 };

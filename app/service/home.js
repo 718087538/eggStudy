@@ -87,18 +87,19 @@ class HomeService extends Service {
     // 登录
     async login(account, password) {
         console.log("acount111:",account,"password",password)
-        let selUserSql = `SELECT password,account_id FROM public."user" WHERE account = $1;`;
+        let selUserSql = `SELECT * FROM public."user" WHERE account = $1;`;
         let result = await this.app.pg.query(selUserSql, [account]);
         let pwd = result.rows[0].password;
         let account_id = result.rows[0].password;
+        let nick_name = result.rows[0].nick_name;
         if (password === pwd) {
             let token = this.app.jwt.sign({account_id:account_id},this.config.jwt.secret,{expiresIn:'7d'});
 
             return {
                 data: {
                     password: password,
-                    token:token
-
+                    token:token,
+                    nickName:nick_name
                 },
                 code: 200,
                 desc: "成功"
