@@ -74,9 +74,9 @@ class HomeService extends Service {
         }
     }
     // 插入单选题目
-    async add(title, optiona, optionb, optionc, optiond, key) {
-        let insertQueSql = `INSERT INTO public.select(title,optiona,optionb,optionc,optiond,key) VALUES ($1,$2,$3,$4,$5,$6);`;
-        let result = await this.app.pg.query(insertQueSql, [title, optiona, optionb, optionc, optiond, key]);
+    async add(title, optiona, optionb, optionc, optiond, key,category_id,sub_id) {
+        let insertQueSql = `INSERT INTO public.select(title,optiona,optionb,optionc,optiond,key,category_id,sub_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`;
+        let result = await this.app.pg.query(insertQueSql, [title, optiona, optionb, optionc, optiond, key,category_id,sub_id]);
         return {
             data: null,
             code: 200,

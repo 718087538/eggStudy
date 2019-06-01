@@ -80,8 +80,8 @@ class HomeController extends Controller {
 //增加单选题目
   async add(){
     const { ctx, app } = this;
-    let {title,optiona,optionb,optionc,optiond,key} = ctx.request.body;
-    let result = await ctx.service.home.add(title,optiona,optionb,optionc,optiond,key);
+    let req = ctx.request.body;
+    let result = await ctx.service.home.add(req.title,req.optiona,req.optionb,req.optionc,req.optiond,req.key,req.category_id,req.sub_id);
     ctx.body = result;
   }
   //查询请求的列表
