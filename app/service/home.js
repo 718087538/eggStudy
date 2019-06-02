@@ -112,10 +112,10 @@ class HomeService extends Service {
             }
         }
     }
-    // 查找列表
-    async findList(lei) {
-        let findTitleSql = `SELECT * FROM public."block" WHERE category_id = $1`;
-        let result = await this.app.pg.query(findTitleSql, [lei])
+    // 查找试卷列表
+    async findList(big_block,category_id) {
+        let findTitleSql = `SELECT * FROM public."block" WHERE big_block = $1 and category_id = $2`;
+        let result = await this.app.pg.query(findTitleSql, [big_block,category_id])
         return {
             data: result,
             code: 200,

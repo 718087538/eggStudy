@@ -84,11 +84,11 @@ class HomeController extends Controller {
     let result = await ctx.service.home.add(req.title,req.optiona,req.optionb,req.optionc,req.optiond,req.key,req.category_id,req.sub_id);
     ctx.body = result;
   }
-  //查询请求的列表
+  //查询试卷的列表
   async findList(){
     const { ctx, app } = this;
     let req = ctx.request.body;
-    let result = await ctx.service.home.findList(req.lei);
+    let result = await ctx.service.home.findList(req.big_block,req.category_id);
     ctx.body = result;
   }
 
