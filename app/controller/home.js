@@ -81,7 +81,7 @@ class HomeController extends Controller {
   async add(){
     const { ctx, app } = this;
     let req = ctx.request.body;
-    let result = await ctx.service.home.add(req.title,req.optiona,req.optionb,req.optionc,req.optiond,req.key,req.category_id,req.sub_id);
+    let result = await ctx.service.home.add(req.title,  req.optiona,req.optionb,req.optionc,req.optiond,req.key, req.big_block,  req.category_id,req.sub_id,req.explain);
     ctx.body = result;
   }
   //查询试卷的列表
@@ -99,7 +99,7 @@ class HomeController extends Controller {
     // let serach = ctx.query;也可以直接拼接在url后面进行查询
     // http://127.0.0.1:7001/getRadio?pageIndex=1&rows=2
     ctx.logger.info('serach',serach);
-    let result = await ctx.service.home.getRadio(serach.rows,serach.pageIndex,serach.category_id,serach.sub_id);
+    let result = await ctx.service.home.getRadio(serach.rows,serach.pageIndex,serach.big_block,serach.category_id,serach.sub_id);
     ctx.body = result;
   }
 

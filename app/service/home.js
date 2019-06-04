@@ -73,10 +73,10 @@ class HomeService extends Service {
             desc: '写入成功'
         }
     }
-    // 插入单选题目
-    async add(title, optiona, optionb, optionc, optiond, key,category_id,sub_id) {
-        let insertQueSql = `INSERT INTO public.select(title,optiona,optionb,optionc,optiond,key,category_id,sub_id) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`;
-        let result = await this.app.pg.query(insertQueSql, [title, optiona, optionb, optionc, optiond, key,category_id,sub_id]);
+    // 插入单选题
+    async add(title, optiona, optionb, optionc, optiond, key, big_block,category_id,sub_id,explain) {
+        let insertQueSql = `INSERT INTO public.select(title,optiona,optionb,optionc,optiond,key, big_block,category_id,sub_id,explain) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);`;
+        let result = await this.app.pg.query(insertQueSql, [title, optiona, optionb, optionc, optiond, key,big_block,category_id,sub_id,explain]);
         return {
             data: null,
             code: 200,
@@ -123,17 +123,15 @@ class HomeService extends Service {
         }
     }
     //查找单选
-    async getRadio(rows, pageIndex, category_id,sub_id) {
+    async getRadio(rows, pageIndex,big_block,category_id,sub_id) {
         pageIndex = rows * (pageIndex - 1);
         console.log('==========' + rows + '======' + pageIndex + '======'+category_id,sub_id);
         // console.log(table == 'select', "999");
 
-        //不能把表名设为变量？？这样真的很low啊，代码多，估计也影响性能，以后类别多了可咋搞啊    ！警告   ！警告
-
-        let findTitleSql = `SELECT * FROM public."select" WHERE category_id = $3 and sub_id = $4 LIMIT $1 OFFSET $2;`;
-        let totalSql = `SELECT COUNT(id) FROM public."select" WHERE category_id = $1 and sub_id = $2;`;//总共有多少页（个）
-        let total = await this.app.pg.query(totalSql, [category_id, sub_id]);
-        let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, category_id, sub_id]);
+        let findTitleSql = `SELECT * FROM public."select" WHERE big_block =$3 and category_id = $4 and sub_id = $5 LIMIT $1 OFFSET $2;`;
+        let totalSql = `SELECT COUNT(id) FROM public."select" WHERE big_block =$1 and category_id = $2 and sub_id = $3;`;//总共有多少页（个）
+        let total = await this.app.pg.query(totalSql, [big_block,category_id, sub_id]);
+        let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, big_block,category_id, sub_id]);
         return {
             data: {
                 result: result.rows,
@@ -142,43 +140,6 @@ class HomeService extends Service {
             code: 200,
             desc: "查询成功"
         }
-
-        // if (table == 'select') {
-        //     let findTitleSql = `SELECT * FROM public."select" WHERE h5_id = $3 LIMIT $1 OFFSET $2;`;
-        //     let totalSql = `SELECT COUNT(id) FROM public."select" WHERE h5_id = $1;`;//总共有多少页（个）
-        //     let total = await this.app.pg.query(totalSql, [number]);
-        //     let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, number]);
-        //     return {
-        //         data: {
-        //             result: result.rows,
-        //             total: total.rows[0].count
-        //         },
-        //         code: 200,
-        //         desc: "查询成功"
-        //     }
-
-        // } else if (table = 'css_page') {
-        //     let findTitleSql = `SELECT * FROM public."css_page" WHERE css_id = $3 LIMIT $1 OFFSET $2;`;
-        //     let totalSql = `SELECT COUNT(id) FROM public."css_page" WHERE css_id = $1;`;//总共有多少页（个）
-        //     let total = await this.app.pg.query(totalSql, [number]);
-        //     let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, number]);
-        //     return {
-        //         data: {
-        //             result: result.rows,
-        //             total: total.rows[0].count
-        //         },
-        //         code: 200,
-        //         desc: "查询成功"
-        //     }
-
-        // }
-
-        // let totalSql = `SELECT COUNT(id) FROM public."select";`;//总共有多少页（个）
-
-
-        // let total = await this.app.pg.query(totalSql, [number]);
-        // let result = await this.app.pg.query(findTitleSql, [rows, pageIndex, number]);
-
     }
 
 
