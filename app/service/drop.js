@@ -12,10 +12,10 @@ class DropService extends Service {
         let dropListSql = `DELETE FROM public.block WHERE big_block = $1 and category_id = $2 and sub_id = $3;`;
         let result = await this.app.pg.query(dropListSql, [big_block, category_id, sub_id]);
         // 删除该试卷的题目
-        let dropListSql = `DELETE FROM public.select WHERE big_block = $1 and category_id = $2 and sub_id = $3;`;
-        let result = await this.app.pg.query(dropListSql, [big_block, category_id, sub_id]);
+        let dropListSql2 = `DELETE FROM public.select WHERE big_block = $1 and category_id = $2 and sub_id = $3;`;
+        let result2 = await this.app.pg.query(dropListSql2, [big_block, category_id, sub_id]);
 
-        this.app.logger.info('result:', result);
+        // this.app.logger.info('result:', result);
         return {
             data: null,
             code: 200,

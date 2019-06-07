@@ -16,6 +16,7 @@ class DropController extends Controller {
         ctx.body = result;
         // ctx.body = "测试返回结果"
     }
+
     //   删除题目
     async dropQuestion() {
         const { ctx, app } = this;
