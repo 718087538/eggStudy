@@ -113,11 +113,14 @@ class HomeService extends Service {
         }
     }
     // 查找试卷列表
-    async findList(big_block,category_id) {
-        let findTitleSql = `SELECT * FROM public."block" WHERE big_block = $1 and category_id = $2`;
-        let result = await this.app.pg.query(findTitleSql, [big_block,category_id])
+    async findList(rows, pageIndex,big_block,category_id) {
+        pageIndex = rows * (pageIndex - 1);
+        let findTitleSql = `SELECT * FROM public."block" WHERE big_block = $1 and category_id = $2 LIMIT $3 OFFSET $4`;
+        let totalSql = `SELECT COUNT(id) FROM public."block" WHERE big_block =$1 and category_id = $2;`;//总共有多少页（个）
+        let total = await this.app.pg.query(totalSql, [big_block,category_id]);
+        let result = await this.app.pg.query(findTitleSql, [big_block,category_id,rows, pageIndex])
         return {
-            data: result,
+            data: {result,total},
             code: 200,
             desc: "查询成功"
         }

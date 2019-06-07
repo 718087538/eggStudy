@@ -21,5 +21,9 @@ module.exports = app => {
   router.post('/findList',controller.home.findList);//查找试卷列表
   router.post('/getRadio',controller.home.getRadio);//查找单选
   router.post('/addTitle',controller.add.addTitle);//增加试卷题目
+
+
+  router.post('/dropList',controller.drop.dropList)//删除试卷
+  router.post('/dropQuestion',controller.drop.dropQuestion)//删除试卷
   
 };

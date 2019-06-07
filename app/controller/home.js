@@ -88,7 +88,7 @@ class HomeController extends Controller {
   async findList(){
     const { ctx, app } = this;
     let req = ctx.request.body;
-    let result = await ctx.service.home.findList(req.big_block,req.category_id);
+    let result = await ctx.service.home.findList(req.rows, req.pageIndex,req.big_block,req.category_id,);
     ctx.body = result;
   }
 
