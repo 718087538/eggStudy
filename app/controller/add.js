@@ -10,8 +10,7 @@ class AddController extends Controller {
   async addTitle() {
     const { ctx, app } = this;
     let req = ctx.request.body;
-    console.log(req.category_id,"sssssssssssssssssssssssssss");
-    let result = await ctx.service.add.addTitle(req.title, req.big_block, req.category_id,  req.sub_id, req.creat_time , req.change_time);
+    let result = await ctx.service.add.addTitle(req.title, req.big_block, req.category_id);
     ctx.body = result;
     // ctx.body = "测试返回结果"
   }
