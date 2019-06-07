@@ -21,8 +21,8 @@ class DropController extends Controller {
         const { ctx, app } = this;
         let req = ctx.request.body;
         // console.log(req.category_id,"sssssssssssssssssssssssssss");
-        ctx.logger.info('req.big_block,req.category_id,req.sub_id', req.big_block, req.category_id, req.sub_id);
-        let result = await ctx.service.drop.dropQuestion(req.big_block, req.category_id, req.sub_id);
+        // ctx.logger.info('req99666666666666666666666', req.big_block, req.category_id, req.sub_id,req.id);
+        let result = await ctx.service.drop.dropQuestion(req.big_block, req.category_id, req.sub_id,req.id);
         ctx.body = result;
         // ctx.body = "测试返回结果"
     }
