@@ -33,6 +33,18 @@ class AdminController extends Controller {
     let result = await ctx.service.home.login(account, password);
     ctx.body = result;
   }
+
+  async test() {
+    console.log("进入了测试")
+    const { ctx, app } = this;
+    let headersCC = ctx.headers.token;//获得header里的token
+
+    console.log(headersCC,"查看token的内容");
+
+    let resultToken = this.app.jwt.verify(headersCC,this.config.secret)
+
+    ctx.body =resultToken;
+  }
 }
 
-module.exports = AdminController;
+module.exports = AdminController; 

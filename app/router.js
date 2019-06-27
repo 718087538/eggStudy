@@ -17,6 +17,8 @@ module.exports = app => {
   router.post('/account',controller.admin.account);//注册
   router.post('/login',controller.admin.login);//登录
 
+  router.post('/test',controller.admin.test);//登录
+
   router.post('/findList',controller.home.findList);//查找试卷列表
   router.post('/getRadio',controller.home.getRadio);//查找单选
  
