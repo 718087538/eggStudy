@@ -2,6 +2,9 @@
 
 const Service = require('egg').Service;
 const md5 = require('blueimp-md5');//引入md5加密
+const svgCaptcha = require('svg-captcha');//引入验证码插件
+
+
 class AccountService extends Service {
     constructor(ctx) {
         super(ctx);
@@ -50,6 +53,18 @@ class AccountService extends Service {
         }
     }
 
+  // 产生验证码
+  async captcha() {
+    const captcha = svgCaptcha.create({
+      size: 4,
+      fontSize: 50,
+      width: 100,
+      height: 40,
+      bacground: '#cc9966'
+    });
+    this.ctx.session.code = captcha.text;
+    return captcha;
+  }
 
 }
 

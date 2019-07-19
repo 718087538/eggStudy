@@ -16,8 +16,9 @@ module.exports = app => {
   router.post('/insertNews',controller.account.insertNews);
   router.post('/register',controller.account.register);//注册
   router.post('/login',controller.account.login);//登录
+  router.get('/verify', app.controller.account.verify); // 验证码//验证码
 
-  router.post('/test',controller.account.test);//登录
+  router.post('/test',controller.account.test);//测试
 
   router.post('/findList',controller.home.findList);//查找试卷列表
   router.post('/getRadio',controller.home.getRadio);//查找单选
