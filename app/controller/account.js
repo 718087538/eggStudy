@@ -28,12 +28,14 @@ class AccountController extends Controller {
     async login() {
         const { ctx, app } = this;
         // ctx.validate(writeRule, ctx.request.body);
-        let { account, password } = ctx.request.body;
-        let result = await ctx.service.account.login(account, password);
+        let sessionVerify = ctx.session.code; // 服务里面的方法
+
+        let { account, password ,verify} = ctx.request.body;
+        let result = await ctx.service.account.login(account, password,verify,sessionVerify);
         ctx.body = result;
     }
 
-    //产生验证码
+    //获取验证码
     async verify() {
         const { ctx } = this;
         let captcha = await this.service.account.captcha(); // 服务里面的方法

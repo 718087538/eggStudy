@@ -25,8 +25,10 @@ class AccountService extends Service {
     }
 
     // 登录
-    async login(account, password) {
-        console.log("acount111:", account, "password", password)
+    async login(account, password , verify,sessionVerify) {
+
+        if(verify === sessionVerify){
+            console.log("acount111:", account, "password", password)
         let selUserSql = `SELECT * FROM public."user" WHERE account = $1;`;
         let result = await this.app.pg.query(selUserSql, [account]);
         console.log(result.rows[0].id);
@@ -51,6 +53,16 @@ class AccountService extends Service {
                 desc: "failed"
             }
         }
+    }else{
+         return {
+                data: "验证码不正确",
+                code: 502,
+                desc: "验证码不正确"
+            }
+    }
+
+
+        
     }
 
   // 产生验证码
