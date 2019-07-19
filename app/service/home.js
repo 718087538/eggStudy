@@ -62,17 +62,7 @@ class HomeService extends Service {
         //     }  
         // }
     }
-    // 注册，插入数据
-    async account(acount, password) {
-        let insertNewsSql = `INSERT INTO public.user(acount,password) VALUES ($1,$2) RETURNING *;`;
-        let result = await this.app.pg.query(insertNewsSql, [acount, password]);
-        this.app.logger.info('result:', result);
-        return {
-            data: null,
-            code: 200,
-            desc: '写入成功'
-        }
-    }
+
     // 插入单选题
     async add(title, optiona, optionb, optionc, optiond, key, big_block,category_id,sub_id,explain) {
         let insertQueSql = `INSERT INTO public.select(title,optiona,optionb,optionc,optiond,key, big_block,category_id,sub_id,explain) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10);`;

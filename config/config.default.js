@@ -41,10 +41,10 @@ module.exports = appInfo => {
 
     // Single Database
     client: {
-      host: 'localhost',
+      host: '129.28.192.143',
       port: '5432',
       user: 'postgres',
-      password: '1234567',
+      password: 'postgres',
       database: 'myStudy',
     },
 
