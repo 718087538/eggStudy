@@ -28,7 +28,7 @@ class AccountController extends Controller {
     async login() {
         const { ctx, app } = this;
         // ctx.validate(writeRule, ctx.request.body);
-        let sessionVerify = ctx.session.code; // 服务里面的方法
+        let sessionVerify = ctx.session.code; // 服务里面的方法  session名肯定要改
 
         let { account, password ,verify} = ctx.request.body;
         let result = await ctx.service.account.login(account, password,verify,sessionVerify);
@@ -39,17 +39,17 @@ class AccountController extends Controller {
     async verify() {
         const { ctx } = this;
         let captcha = await this.service.account.captcha(); // 服务里面的方法
-        ctx.response.type = 'image/svg+xml';  // 知道你个返回的类型
+        ctx.response.type = 'image/svg+xml';  // 设置你个返回的类型
         ctx.body = captcha.data; // 返回一张图片
     }
 
     // 对比验证码
-    async verify_code() {
-        const { ctx } = this;
-        let captcha = await this.service.account.captcha(); // 服务里面的方法
-        ctx.response.type = 'image/svg+xml';  // 知道你个返回的类型
-        ctx.body = captcha.data; // 返回一张图片
-    }
+    // async verify_code() {
+    //     const { ctx } = this;
+    //     let captcha = await this.service.account.captcha(); // 服务里面的方法
+    //     ctx.response.type = 'image/svg+xml';  // 知道你个返回的类型
+    //     ctx.body = captcha.data; // 返回一张图片
+    // }
 
     async test() {
         // console.log("进入了测试")
@@ -71,6 +71,17 @@ class AccountController extends Controller {
 
     
 }
+
+
+
+// sql:查询是否有记录sql代码
+
+
+// if(sql查到记录 ！= ""){
+//    return 已有这个用户， 
+// }else{
+//     执行注册（在这写注册代码）
+// }
 
 module.exports = AccountController;
 

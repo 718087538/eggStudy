@@ -74,6 +74,9 @@ class AccountService extends Service {
       height: 40,
       bacground: '#cc9966'
     });
+
+    let sessName = new Date().getTime();//获取时间戳，命名session
+    console.log(sessName);
     this.ctx.session.code = captcha.text;
     return captcha;
   }
