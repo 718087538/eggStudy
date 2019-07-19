@@ -33,27 +33,41 @@ class AccountController extends Controller {
         ctx.body = result;
     }
 
-    async verify() {//获取验证码
+    //产生验证码
+    async verify() {
         const { ctx } = this;
         let captcha = await this.service.account.captcha(); // 服务里面的方法
         ctx.response.type = 'image/svg+xml';  // 知道你个返回的类型
         ctx.body = captcha.data; // 返回一张图片
     }
 
+    // 对比验证码
+    async verify_code() {
+        const { ctx } = this;
+        let captcha = await this.service.account.captcha(); // 服务里面的方法
+        ctx.response.type = 'image/svg+xml';  // 知道你个返回的类型
+        ctx.body = captcha.data; // 返回一张图片
+    }
 
     async test() {
+        // console.log("进入了测试")
+        // const { ctx, app } = this;
+        // let headersCC = ctx.headers.token;//获得header里的token
+        // console.log(headersCC, "查看token的内容");
+
+        // let resultToken = this.app.jwt.verify(headersCC, this.config.secret)
+
+        // ctx.body = resultToken;
         console.log("进入了测试")
         const { ctx, app } = this;
-        let headersCC = ctx.headers.token;//获得header里的token
+        let headersCC = ctx.session.code;//获得session中的验证码
         console.log(headersCC, "查看token的内容");
-
-        let resultToken = this.app.jwt.verify(headersCC, this.config.secret)
-
-        ctx.body = resultToken;
-
+        ctx.body = headersCC;
 
 
     }
+
+    
 }
 
 module.exports = AccountController;
