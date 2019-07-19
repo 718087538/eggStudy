@@ -29,7 +29,7 @@ class AccountController extends Controller {
     const { ctx, app } = this;
     // ctx.validate(writeRule, ctx.request.body);
     let { account, password } = ctx.request.body;
-    let result = await ctx.service.home.login(account, password);
+    let result = await ctx.service.account.login(account, password);
     ctx.body = result;
   }
 
