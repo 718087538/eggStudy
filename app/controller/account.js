@@ -28,17 +28,20 @@ class AccountController extends Controller {
     async login() {
         const { ctx, app } = this;
         // ctx.validate(writeRule, ctx.request.body);
-        let sessionVerify = ctx.session.code; // 服务里面的方法  session名肯定要改
+        // let sessionVerify = ctx.session.code; // 服务里面的方法  session名肯定要改
 
-        let { account, password ,verify} = ctx.request.body;
-        let result = await ctx.service.account.login(account, password,verify,sessionVerify);
+        let { account, password, verify100, verifyId } = ctx.request.body;
+        //靠，为什么verify改成其他的名字不行
+        console.log("controuller中的验证码",verify100);
+        let result = await ctx.service.account.login(account, password, verify100, verifyId);
         ctx.body = result;
     }
 
     //获取验证码
     async verify() {
         const { ctx } = this;
-        let captcha = await this.service.account.captcha(); // 服务里面的方法
+        let verifyId = ctx.request.body;//请求验证码的id，与该验证码关联
+        let captcha = await this.service.account.captcha(verifyId); // 服务里面的方法
         ctx.response.type = 'image/svg+xml';  // 设置你个返回的类型
         ctx.body = captcha.data; // 返回一张图片
     }
@@ -69,7 +72,7 @@ class AccountController extends Controller {
 
     }
 
-    
+
 }
 
 
