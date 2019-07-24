@@ -20,6 +20,12 @@ exports.validate = {
   package: 'egg-validate',
 };
 
+exports.redis = {
+  enable: true,
+  package: 'egg-redis',
+};
+
+
 //跨域
 exports.cors= {
   enable: true,

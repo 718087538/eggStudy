@@ -25,7 +25,7 @@ module.exports = appInfo => {
   };
 
   config.jwt = {
-    secret:"123456" //可以自己设置密钥，暂时先不用改
+    secret: "123456" //可以自己设置密钥，暂时先不用改
   }
 
   // add your middleware config here
@@ -66,6 +66,16 @@ module.exports = appInfo => {
     //   },
     // },
   };
+
+  config.redis = {
+    client: {
+      port: 6379,          // Redis port
+      host: '127.0.0.1',   // Redis host
+      password: null,
+      db: 0,
+    },
+  }
+
 
   //config.security和config.cors用来处理跨域
   config.security = {
