@@ -32,7 +32,7 @@ class AccountController extends Controller {
 
         let { account, password, verify100, verifyId } = ctx.request.body;
         //靠，为什么verify改成其他的名字不行
-        console.log("controuller中的验证码",verify100);
+        // console.log("controuller中的验证码",verify100);
         let result = await ctx.service.account.login(account, password, verify100, verifyId);
         ctx.body = result;
     }
@@ -40,8 +40,8 @@ class AccountController extends Controller {
     //获取验证码
     async verify() {
         const { ctx } = this;
-        let verifyId = ctx.request.body;//请求验证码的id，与该验证码关联
-        let captcha = await this.service.account.captcha(verifyId); // 服务里面的方法
+        let req = ctx.request.body;//请求验证码的id，与该验证码关联
+        let captcha = await this.service.account.captcha(req.verifyId); // 服务里面的方法
         ctx.response.type = 'image/svg+xml';  // 设置你个返回的类型
         ctx.body = captcha.data; // 返回一张图片
     }
@@ -65,9 +65,11 @@ class AccountController extends Controller {
         // ctx.body = resultToken;
         console.log("进入了测试")
         const { ctx, app } = this;
-        let headersCC = ctx.session.code;//获得session中的验证码
-        console.log(headersCC, "查看token的内容");
-        ctx.body = headersCC;
+        let req= ctx.request.body;
+       
+        let result = await ctx.service.account.test(req.redisVerId);
+
+        ctx.body = result;
 
 
     }

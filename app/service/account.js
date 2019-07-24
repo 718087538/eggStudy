@@ -17,6 +17,14 @@ class AccountService extends Service {
         super(ctx);
     }
 
+    async test(redisVerId) {
+        client.get(redisVerId, function (err, value) {
+            if (err) throw err;
+            console.log('Testredis中的验证码为0.0' + value)
+            // client.quit();
+        })
+    }
+
     // 注册
     async account(account, password, nick_name) {
 
@@ -38,14 +46,13 @@ class AccountService extends Service {
 
         //从redis中拿出verifyId对应的验证码
         client.get(verifyId, function (err, value) {
-            // if (err) throw err;
-            console.log('redis中的验证码为====》》》》' + value)
-            // client.quit();
+            if (err) throw err;
+            console.log("redis查到的验证码",value)
         })
 
         // console.log("收到验证码",verify100);
         // console.log("验证码id",verifyId);
-        
+
 
         // if (verify100 === 'M6lq') {
         //     console.log("acount111:", account, "password", password)
@@ -99,15 +106,15 @@ class AccountService extends Service {
         // let sessName = new Date().getTime();//获取时间戳，命名session
         // console.log(sessName);
         // this.ctx.session.code = captcha.text;//把数字形式验证码存在session中
-
+        // console.log("02本地验证码id",verifyId);
         client.set(verifyId, captcha.text, redis.print);//把数字形式验证码存在对应的verifyId中，并打印
 
         //测试是否成功存redis中
-        client.get(verifyId, function (err, value) {
-            if (err) throw err;
-            console.log('redis中的验证码为0.0' + value)
-            // client.quit();
-        })
+        // client.get(verifyId, function (err, value) {
+        //     if (err) throw err;
+        //     console.log('redis中的验证码为0.0' + value)
+        //     // client.quit();
+        // })
 
         return captcha;
     }
