@@ -21,7 +21,7 @@ class AccountController extends Controller {
     async register() {
         const { ctx, app } = this;
         let addUser = ctx.request.body;
-        let result = await ctx.service.account.account(addUser.account, addUser.password, addUser.nick_name);
+        let result = await ctx.service.account.account(addUser.account,   addUser.password,    addUser.nick_name,addUser.verify100,   addUser.uuid);
         ctx.body = result;
     }
     // 登录

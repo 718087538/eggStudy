@@ -19,17 +19,49 @@ class AccountService extends Service {
     }
 
     // 注册
-    async account(account, password, nick_name) {
+    async account(account, password, nick_name, verify100, uuid) {
 
-        let md5Password = md5(password);
-        let insertNewsSql = `INSERT INTO public.user(account,password,nick_name) VALUES ($1,$2,$3) RETURNING *;`;
-        let result = await this.app.pg.query(insertNewsSql, [account, md5Password, nick_name]);
-        this.app.logger.info('result:', result);
-        return {
-            data: null,
-            code: 200,
-            desc: '写入成功'
+
+        //检查账户是否存在，防止重复注册
+        let checkUser = `SELECT * FROM public."user" WHERE account = $1;`;
+        let checkResult = await this.app.pg.query(checkUser, [account]);
+        console.log("检查账户结果", checkResult.rows[0]);
+        if (checkResult.rows[0]) {
+            return {
+                data: null,
+                code: 503,
+                desc: '账号已存在',
+            }
         }
+
+
+        //检查验证码是否正确，防止疯狂注册
+        //从redis中拿出verifyId对应的验证码
+        let verifyByUuid = await this.app.redis.get(uuid);
+
+        if (verify100 === verifyByUuid) {
+
+
+
+
+            let md5Password = md5(password);
+            let insertNewsSql = `INSERT INTO public.user(account,password,nick_name) VALUES ($1,$2,$3) RETURNING *;`;
+            let result = await this.app.pg.query(insertNewsSql, [account, md5Password, nick_name]);
+            this.app.logger.info('result:', result);
+            return {
+                data: null,
+                code: 200,
+                desc: '写入成功'
+            }
+        } else {
+            return {
+                data: null,
+                code: 504,
+                desc: '验证码错误'
+            }
+        }
+
+
     }
 
     // 登录
@@ -38,8 +70,8 @@ class AccountService extends Service {
         //从redis中拿出verifyId对应的验证码
         let verifyByUuid = await this.app.redis.get(uuid);
 
-        
-        console.log("redis中的验证码",verifyByUuid);
+
+        console.log("redis中的验证码", verifyByUuid);
 
 
         if (verify100 === verifyByUuid) {
@@ -75,9 +107,6 @@ class AccountService extends Service {
                 desc: "验证码不正确"
             }
         }
-
-
-
     }
 
     // 产生验证码
@@ -91,7 +120,7 @@ class AccountService extends Service {
         });
 
         await this.app.redis.set(uuid, captcha.text);//好用的方法
-
+        console.log("本次验证码", captcha.text);
         return captcha;
     }
 
