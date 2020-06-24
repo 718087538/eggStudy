@@ -21,6 +21,7 @@ class HomeController extends Controller {
   async index() {
     // this.ctx.body = 'hi, egg,hello World';
     // await this.ctx.render('index');
+    console.log(process.env.SMSSECRETACCESSKEY);
 
 
     // 注意  ctx是一部方法，要加await

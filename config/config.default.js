@@ -40,13 +40,13 @@ module.exports = appInfo => {
     // pool: true,
 
     // Single Database
-    client: {
-      host: '129.28.192.143',
-      port: '5432',
-      user: 'postgres',
-      password: 'postgres',
-      database: 'myStudy',
-    },
+    // client: {
+    //   host: '129.28.192.143',
+    //   port: '5432',
+    //   user: 'postgres',
+    //   password: 'postgres',
+    //   database: 'myStudy',
+    // },
 
     // Multi Databases
     // clients: {
@@ -67,14 +67,14 @@ module.exports = appInfo => {
     // },
   };
 
-  config.redis = {
-    client: {
-      port: 6379,          // Redis port
-      host: '127.0.0.1',   // Redis host
-      password: null,
-      db: 0,
-    },
-  }
+  // config.redis = {
+  //   client: {
+  //     port: 6379,          // Redis port
+  //     host: '127.0.0.1',   // Redis host
+  //     password: null,
+  //     db: 0,
+  //   },
+  // }
 
 
   //config.security和config.cors用来处理跨域
